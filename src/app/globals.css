@@ -1,0 +1,300 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────────────────────
+   Receipts, design system
+   Neutral near-black canvas. Hairlines, not glow. One signal colour.
+   The only "colourful" object is the product itself: receipt paper.
+   ─────────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-bg: #0a0a0a;
+  --color-bg-1: #111111;
+  --color-bg-2: #181818;
+  --color-ink: #ededed;
+  --color-muted: #a1a1a1;
+  --color-faint: #6b6b6b;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-2: rgba(255, 255, 255, 0.16);
+
+  --color-paper: #f2efe7;
+  --color-paper-2: #e8e4d9;
+  --color-paper-ink: #151515;
+  --color-paper-faint: #8b877c;
+
+  --color-signal: #3ddc97;
+  --color-amber: #f5a524;
+  --color-red: #ff5a4e;
+
+  /* status tokens (used by components) */
+  --color-verified: #3ddc97;
+  --color-found: #ededed;
+  --color-notfound: #6b6b6b;
+  --color-disputed: #f5a524;
+  --color-strong: #3ddc97;
+  --color-partial: #f5a524;
+  --color-thin: #ff5a4e;
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-serif: var(--font-instrument), "Times New Roman", serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-bg);
+  overflow-x: clip;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-paper);
+  color: var(--color-paper-ink);
+}
+
+/* Component classes live in a layer so Tailwind utilities (md:hidden, h-*, …)
+   can always override them. */
+@layer components {
+
+/* Fine film grain + top light. Very quiet. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.toplight {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 70vh;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(60% 60% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 70%);
+}
+
+/* ── Type helpers ── */
+.serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.mono {
+  font-family: var(--font-mono);
+}
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+/* ── Surfaces ── */
+.glass,
+.surface {
+  background: var(--color-bg-1);
+  border: 1px solid var(--color-line);
+}
+.glass-hover,
+.surface-hover {
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+.glass-hover:hover,
+.surface-hover:hover {
+  border-color: var(--color-line-2);
+  background: var(--color-bg-2);
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 40px;
+  padding: 0 1.1rem;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary,
+.btn-white {
+  background: #fff;
+  color: #0a0a0a;
+}
+.btn-primary:hover,
+.btn-white:hover {
+  background: #d9d9d9;
+}
+.btn-ghost,
+.btn-line {
+  background: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-line-2);
+}
+.btn-ghost:hover,
+.btn-line:hover {
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--color-line-2);
+  color: var(--color-muted);
+}
+
+/* ── Live dot ── */
+@keyframes live {
+  0% { box-shadow: 0 0 0 0 rgba(61, 220, 151, 0.55); }
+  70% { box-shadow: 0 0 0 7px rgba(61, 220, 151, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(61, 220, 151, 0); }
+}
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-signal);
+  animation: live 2.2s infinite;
+}
+.pulse-ring {
+  animation: live 2.2s infinite;
+}
+
+/* ── Receipt paper ── */
+.paper {
+  --zz: 9px;
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.03), transparent 12%, transparent 88%, rgba(0, 0, 0, 0.04)),
+    var(--color-paper);
+  color: var(--color-paper-ink);
+  font-family: var(--font-mono);
+  /* torn zig-zag top + bottom */
+  mask:
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / calc(var(--zz) * 2) 51% repeat-x,
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / calc(var(--zz) * 2) 51% repeat-x;
+  -webkit-mask:
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / calc(var(--zz) * 2) 51% repeat-x,
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / calc(var(--zz) * 2) 51% repeat-x;
+}
+.paper-shadow {
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.55)) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+}
+.rule {
+  border: 0;
+  border-top: 1.5px dashed rgba(21, 21, 21, 0.28);
+}
+
+/* print-in reveal: paper feeds from the top */
+@keyframes print {
+  from { clip-path: inset(0 0 100% 0); transform: translateY(-24px); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+.print-in {
+  animation: print 1.4s steps(28, end) both;
+}
+
+/* stamp slam */
+@keyframes stamp {
+  0% { opacity: 0; transform: rotate(-14deg) scale(2.2); }
+  60% { opacity: 1; transform: rotate(-14deg) scale(0.94); }
+  100% { opacity: 1; transform: rotate(-14deg) scale(1); }
+}
+.stamp-in {
+  animation: stamp 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) 1.35s both;
+}
+
+/* ── Marquee tape ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee {
+  animation: marquee 40s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ── Loading ── */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #121212 25%, #1c1c1c 50%, #121212 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes reveal {
+  to { opacity: 1; transform: none; }
+}
+
+/* focus visibility for keyboard users */
+:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 999px; }
+
+} /* end @layer components */
