@@ -5,7 +5,9 @@ import { promises as fs } from "fs";
 import path from "path";
 import type { Receipt, Dispute, WatchEntry, ClaimState } from "./types";
 
-const DATA_DIR = path.join(process.cwd(), ".data");
+const DATA_DIR =
+  process.env.DATA_DIR ||
+  (process.env.VERCEL ? path.join("/tmp", ".data") : path.join(process.cwd(), ".data"));
 
 interface DbShape {
   receipts: Record<string, Receipt>; // keyed by token address
