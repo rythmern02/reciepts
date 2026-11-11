@@ -145,8 +145,8 @@ export default async function Image() {
             {/* Token */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                <span style={{ fontSize: 24, fontWeight: 800 }}>$JUP</span>
-                <span style={{ fontSize: 14, color: "#666" }}>Jupiter</span>
+                <span style={{ fontSize: 24, fontWeight: 800 }}>$TOKEN</span>
+                <span style={{ fontSize: 14, color: "#666" }}>Solana Startup</span>
               </div>
               <div style={{ fontSize: 12, fontWeight: 700, color: "#178a5c" }}>VERIFIED</div>
             </div>

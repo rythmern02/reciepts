@@ -82,8 +82,8 @@
     <line x1="28" y1="84" x2="432" y2="84" stroke="#151515" stroke-width="2" stroke-dasharray="6 4" stroke-opacity="0.3" />
 
     <!-- Token Meta -->
-    <text x="28" y="112" fill="#151515" font-family="system-ui, sans-serif" font-size="22" font-weight="800"></text>
-    <text x="96" y="112" fill="#666" font-family="system-ui, sans-serif" font-size="16" font-weight="500">Jupiter Exchange</text>
+    <text x="28" y="112" fill="#151515" font-family="system-ui, sans-serif" font-size="22" font-weight="800">$TOKEN</text>
+    <text x="126" y="112" fill="#666" font-family="system-ui, sans-serif" font-size="16" font-weight="500">Solana Startup</text>
     <text x="432" y="112" text-anchor="end" fill="#3ddc97" font-family="monospace" font-size="13" font-weight="700">● VERIFIED</text>
 
     <!-- Dashed rule -->
@@ -99,7 +99,7 @@
       <!-- Row 2: Work -->
       <text x="0" y="78" fill="#151515" font-weight="800" letter-spacing="2">WORK</text>
       <text x="404" y="78" text-anchor="end" fill="#178a5c" font-weight="800">FOUND ✓</text>
-      <text x="0" y="96" fill="#8b877c" font-size="11.5">Live product at jup.ag (HTTP 200)</text>
+      <text x="0" y="96" fill="#8b877c" font-size="11.5">Live product deployed (HTTP 200)</text>
 
       <!-- Row 3: Pulse -->
       <text x="0" y="132" fill="#151515" font-weight="800" letter-spacing="2">PULSE</text>
